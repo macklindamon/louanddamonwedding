@@ -1,7 +1,7 @@
 @font-face {
     font-family: 'Affection';
-    src: url('../fonts/Affection.woff2') format('woff2'),
-         url('../fonts/Affection.woff') format('woff');
+    src: url('../fonts/affection.woff2') format('woff2'),
+         url('../fonts/affection.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
