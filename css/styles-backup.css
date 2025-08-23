@@ -1,0 +1,351 @@
+@font-face {
+    font-family: 'Affection';
+    src: url('../fonts/Affection.woff2') format('woff2'),
+         url('../fonts/Affection.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --primary-green: #94A899;
+    --light-green: #C5D1C8;
+    --dark-green: #5B6D62;
+    --off-white: #F8F9F7;
+    --text-color: #333333;
+}
+
+body {
+    font-family: 'Lora', serif;
+    color: var(--text-color);
+    line-height: 1.6;
+    background-color: var(--off-white);
+    margin: 0;
+    padding: 0;
+}
+
+.hero {
+    background: var(--off-white);
+    padding: 180px 0 100px;
+    position: relative;
+    margin-top: -80px;
+}
+
+.logo {
+    position: absolute;
+    top: -150px;
+    right: -150px;
+    width: 500px;
+    max-width: none;
+    z-index: 10;
+    transform: rotate(-5deg);
+}
+
+.hero .container {
+    position: relative;
+    z-index: 2;
+    padding-top: 50px;
+}
+
+.save-date {
+    font-size: 2.5rem;
+    font-family: 'Affection', cursive;
+    text-transform: lowercase;
+    font-weight: 400;
+    color: var(--dark-green);
+    margin-bottom: 1rem;
+}
+
+.names {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #000000;
+    margin-bottom: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.names .and {
+    font-size: 2.5rem;
+    font-family: 'Affection', cursive;
+    text-transform: lowercase;
+    font-weight: 400;
+    color: var(--dark-green);
+}
+
+.wedding-date {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.wedding-venue {
+    font-size: 1.5rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.floral-divider {
+    width: 150px;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--light-green), transparent);
+    margin: 2rem auto;
+}
+
+.floral-corner {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M20,80 Q50,20 80,80" stroke="%23C5D1C8" stroke-width="2" fill="none"/></svg>');
+    background-size: cover;
+    z-index: 1;
+}
+
+.floral-corner.bottom-left {
+    bottom: 20px;
+    left: 20px;
+}
+
+.floral-corner.bottom-right {
+    bottom: 20px;
+    right: 20px;
+    transform: scaleX(-1);
+}
+
+/* Desktop Menu */
+.navbar {
+    background-color: rgba(255, 255, 255, 0.98);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 1rem 0;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar-nav {
+    flex-direction: row;
+    justify-content: center;
+}
+
+.nav-link {
+    color: var(--text-color) !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.5rem 1.5rem !important;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--dark-green) !important;
+}
+
+.navbar-scrolled {
+    transform: translateY(-100%);
+}
+
+.section-padding {
+    padding: 80px 0;
+}
+
+.section-title {
+    text-align: center;
+    color: var(--dark-green);
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 2px;
+    background-color: var(--light-green);
+}
+
+.ceremony-details {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.floral-accent {
+    width: 80px;
+    height: 80px;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="%23C5D1C8" stroke-width="2" fill="none"/><path d="M30,50 Q50,30 70,50 Q50,70 30,50" fill="%23C5D1C8"/></svg>');
+    background-size: cover;
+    flex-shrink: 0;
+}
+
+.floral-accent.left {
+    margin-right: 2rem;
+}
+
+.floral-accent.right {
+    margin-left: 2rem;
+}
+
+.ceremony-details .content {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.date, .time, .venue {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--dark-green);
+    margin-bottom: 0.5rem;
+}
+
+.address {
+    font-size: 1.2rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.divider {
+    width: 100px;
+    height: 2px;
+    background-color: var(--light-green);
+    margin: 2rem auto;
+}
+
+.reception-intro {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.accommodation-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.accommodation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.accommodation-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.accommodation-card h3 {
+    color: var(--dark-green);
+    margin-top: 1rem;
+    font-size: 1.5rem;
+}
+
+.accommodation-card .location {
+    color: var(--text-color);
+    font-style: italic;
+    margin-top: auto;
+}
+
+.pub-details {
+    background: var(--light-green);
+    padding: 2rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+}
+
+.pub-details h3 {
+    color: var(--dark-green);
+    margin-bottom: 1rem;
+}
+
+.qr-codes img {
+    max-width: 200px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.deadline {
+    font-weight: 600;
+    color: var(--dark-green);
+    font-size: 1.2rem;
+}
+
+.rsvp-info ul li {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.footer {
+    background: var(--dark-green);
+    color: white;
+    text-align: center;
+    padding: 3rem 0;
+}
+
+.footer .names {
+    color: white;
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .hero {
+        padding: 120px 0 80px;
+        margin-top: -40px;
+    }
+
+    .logo {
+        width: 300px;
+        top: -80px;
+        right: -80px;
+    }
+
+    .names {
+        font-size: 2.5rem;
+    }
+    
+    .names .and {
+        font-size: 2rem;
+    }
+    
+    .save-date {
+        font-size: 2rem;
+    }
+    
+    .wedding-date {
+        font-size: 1.5rem;
+    }
+    
+    .section-padding {
+        padding: 60px 0;
+    }
+    
+    .ceremony-details {
+        flex-direction: column;
+    }
+    
+    .floral-accent {
+        margin: 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: 200px;
+        top: -20px;
+        right: -20px;
+    }
+}

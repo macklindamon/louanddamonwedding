@@ -1,93 +1,293 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Louisa & Damon Wedding</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Lora', serif;
-      letter-spacing: 0.2em;
-      background-color: #fff;
-      color: #333;
-    }
-    .container-custom {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    .section {
-      margin-bottom: 4rem;
-    }
-    .title {
-      font-size: 2rem;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 2rem;
-    }
-    .floral {
-      margin: 2rem 0;
-    }
-    .image-full {
-      width: 100%;
-      height: auto;
-      border-radius: 0;
-    }
-    .section-title {
-      font-size: 1.5rem;
-      font-weight: bold;
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-    .text-center p {
-      margin-bottom: 0.5rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Louisa & Damon's Wedding</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <div class="container container-custom">
-    <div class="text-center section">
-      <h1 class="title">LOUISA BATCHELOR <br><small style="font-size: 1rem;">and</small><br> DAMON MACKLIN</h1>
-      <p>invite you to celebrate their marriage<br>
-        Saturday 13th June 2026 at 1PM<br>
-        RIVERBEND BARN, <br>STILLWORTH</p>
+
+    <!-- Floating Leaves -->
+    <div class="parallax-leaves">
+        <img src="images/leaf-1.png" alt="Floating Leaf" class="floating-leaf leaf-1" data-speed="0.3">
+        <img src="images/leaf-2.png" alt="Floating Leaf" class="floating-leaf leaf-2" data-speed="0.5">
+        <img src="images/leaf-3.png" alt="Floating Leaf" class="floating-leaf leaf-3" data-speed="0.4" data-trigger="ceremony" data-fade-out="details">
+        <img src="images/leaf-4.png" alt="Floating Leaf" class="floating-leaf leaf-4" data-speed="0.6" data-trigger="ceremony" data-fade-out="details">
     </div>
 
-    <div class="section">
-      <h2 class="section-title">How to Find Us</h2>
-      <img src="assets/map.png" class="image-full" alt="Map Illustration">
-      <p class="text-center">Riverbend Barn is located just off the A35, between Acornwick and Stillworth... (include directions from screenshot)</p>
+    <div class="hero">
+        <img src="images/floral-top-left.png" alt="Floral Wreath" class="floral-top-left">
+        <img src="images/floral-top-right.png" alt="Floral Wreath" class="floral-top-right">
+        <div class="container text-center">
+            <h1 class="save-date">HE WEDDING O</h1>
+            <h2 class="names">LOUISA <span class="and">and</span> DAMON</h2>
+            <p class="wedding-date">18.07.2026</p>
+            <p class="wedding-venue-1">FITZLEROI BARN</p>
+            <p class="wedding-venue-2">FITTLEWORTH</p>
+            <div class="floral-divider"></div>
+        </div>
     </div>
 
-    <div class="section">
-      <h2 class="section-title">Order of the Day</h2>
-      <img src="assets/order.png" class="image-full" alt="Order of the Day">
-    </div>
+    <!-- Desktop Menu -->
+    <nav class="navbar sticky-top navbar-expand-lg d-none d-lg-block">
+        <div class="container">
+            <div class="collapse navbar-collapse show">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="#ceremony">Ceremony</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#order-of-day">Order of the Day</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#accommodation">Where to Stay</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#day-after">The Day After</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#rsvp">RSVP</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <div class="section">
-      <h2 class="section-title">Other Bits</h2>
-      <img src="assets/otherbits.png" class="image-full" alt="Other Bits">
-    </div>
+    <section id="ceremony" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">CEREMONY</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <div class="ceremony-details">
+                        <div class="content">
+                            <p class="date">Saturday, 22nd August 2025</p>
+                            <p class="time">3:00 PM</p>
+                            <p class="venue">St. Mary's Church</p>
+                            <p class="address">Church Lane, Petworth</p>
+                            <p class="reception-intro">Followed by dinner and dancing at</p>
+                            <p class="venue">Petworth House</p>
+                            <p class="address">Petworth, West Sussex</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="section">
-      <h2 class="section-title">Where to Stay</h2>
-      <img src="assets/stay.png" class="image-full" alt="Where to Stay">
-    </div>
+    <section id="order-of-day" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Order of the Day</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-10 col-lg-8 text-center">
+                    <p class="mb-4">Here's how our special day will unfold. We can't wait to celebrate with you!</p>
+                    <div class="timeline-container">
+                        <img src="images/order-of-day.png" alt="Wedding Day Timeline" class="img-fluid timeline-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="section">
-      <h2 class="section-title">The Day After</h2>
-      <img src="assets/pub.png" class="image-full" alt="Pub Meet Up">
-    </div>
+    <section id="our-story" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">Our Story</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="images/couple-photo.jpg" alt="Louisa and Damon" class="img-fluid rounded">
+                </div>
+                <div class="col-md-6">
+                    <div class="story-content">
+                        <p>Our love story began...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div class="text-center section">
-      <h2 class="section-title">RSVP</h2>
-      <p>Please RSVP via our wedding site or email us directly.</p>
-    </div>
-  </div>
+    <section id="details" class="section-padding bg-light">
+        <div class="container">
+            <h2 class="section-title">Where to Stay</h2>
+            <p class="text-center mb-4">Here's our pick of some lovely local places to stay near the wedding. We've chosen them for their charm, comfort, and convenience. We'd really encourage you to book as soon as you can, as accommodation tends to fill up quickly. That said, there are plenty of other options in the surrounding area, so do have a look around if you prefer something different.</p>
+            <div class="row accommodations">
+                <div class="col-md-4 mb-4">
+                    <div class="accommodation-card">
+                        <img src="images/swan-inn.png" alt="The Swan Inn" class="img-fluid mb-3">
+                        <h3>The Swan Inn</h3>
+                        <p class="location">@ Fittleworth</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="accommodation-card">
+                        <img src="images/badgers-cottage.png" alt="Badgers Cottage" class="img-fluid mb-3">
+                        <h3>Badgers Cottage</h3>
+                        <p class="location">@ Fittleworth</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="accommodation-card">
+                        <img src="images/angel-inn.png" alt="The Angel Inn" class="img-fluid mb-3">
+                        <h3>The Angel Inn</h3>
+                        <p class="location">@ Petworth</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="accommodation-card">
+                        <img src="images/horse-guards.png" alt="The Horse Guards Inn" class="img-fluid mb-3">
+                        <h3>The Horse Guards Inn</h3>
+                        <p class="location">@ Tillington</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="accommodation-card">
+                        <img src="images/halfway-bridge.png" alt="The Halfway Bridge Inn" class="img-fluid mb-3">
+                        <h3>The Halfway Bridge Inn</h3>
+                        <p class="location">@ Lodsworth</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="accommodation-card">
+                        <img src="images/spread-eagle.png" alt="The Spread Eagle" class="img-fluid mb-3">
+                        <h3>The Spread Eagle</h3>
+                        <p class="location">@ Midhurst</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-4">If you're looking to book nearby accommodation, a friend of ours runs a business that can often get great rates at local inns and hotels. If you'd like to see what she can find, just get in touch with her at hannah@bonvoyageholidays.co.uk.</p>
+        </div>
+    </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <section id="day-after" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">The Day After</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <p class="mb-4">If you'd like to continue the celebrations with us, or just in need of a good hair of the dog, join us for a relaxed Sunday gathering at The Welldiggers Arms, just 5 minutes from the venue.</p>
+                    <p class="mb-4">We'll be there from midday. With countryside views over the South Downs, there will be food and wine available to purchase from the bar.</p>
+                    <p class="mb-4">While Saturday is a grown-ups-only affair (except for our close family's children), you're welcome to bring your little ones along to join us on Sunday.</p>
+                    <div class="pub-details mt-5">
+                        <h3>How to Find the Pub</h3>
+                        <p>The Welldiggers Arms, Low Heath, Petworth, GU28 0HG</p>
+                        <p>You'll find The Welldiggers Arms just off the A283, about a mile east of Petworth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="rsvp" class="section-padding">
+        <div class="container">
+            <h2 class="section-title">RSVP</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <h3 class="mb-4">Skip the Stamps!</h3>
+                    <p class="mb-4">Just scan, tap, and tell us if you're coming!</p>
+                    <div class="qr-codes row justify-content-center">
+                        <div class="col-md-6">
+                            <img src="images/rsvp-qr.png" alt="RSVP QR Code" class="img-fluid mb-3">
+                        </div>
+                    </div>
+                    <div class="rsvp-details mt-4">
+                        <p>You can RSVP by scanning the QR code above or filling out the form below</p>
+                        <p class="deadline">Kindly reply by Tuesday 30th September 2025.</p>
+                        
+                        <form id="rsvp-form" class="rsvp-form mt-5 text-start">
+                            <div class="mb-4">
+                                <label class="form-label">Are you attending?</label>
+                                <div class="attendance-buttons">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="attending-yes" name="attending" value="yes" required>
+                                        <label class="form-check-label" for="attending-yes">
+                                            Yes, we're coming!
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="attending-no" name="attending" value="no" required>
+                                        <label class="form-check-label" for="attending-no">
+                                            Sorry, we can't make it
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-4" id="event-selection" style="display: none;">
+                                <label class="form-label">Which events will you attend?</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="attending-saturday" name="events[]" value="saturday">
+                                    <label class="form-check-label" for="attending-saturday">
+                                        Saturday (Wedding Ceremony & Reception)
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="attending-sunday" name="events[]" value="sunday">
+                                    <label class="form-check-label" for="attending-sunday">
+                                        Sunday (Day After Gathering)
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="party-size" class="form-label">How many people will be in your party?</label>
+                                <select class="form-select" id="party-size" name="party-size" required>
+                                    <option value="">Select number of people</option>
+                                    <option value="1">1 person</option>
+                                    <option value="2">2 people</option>
+                                    <option value="3">3 people</option>
+                                    <option value="4">4 people</option>
+                                    <option value="5">5 people</option>
+                                    <option value="6">6+ people</option>
+                                </select>
+                            </div>
+
+                            <div class="people-details">
+                                <h5 class="mb-3">Guest Details</h5>
+                                <div class="person-container">
+                                    <div class="person-entry mb-4 p-3 border rounded">
+                                        <h6>Person 1</h6>
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">First Name</label>
+                                                <input type="text" class="form-control" name="person-1-firstname" required>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label class="form-label">Last Name</label>
+                                                <input type="text" class="form-control" name="person-1-lastname" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <input type="email" class="form-control" name="person-1-email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Dietary Requirements</label>
+                                            <textarea class="form-control" name="person-1-dietary" rows="2" placeholder="Please specify any dietary requirements or allergies"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline-secondary mb-4" id="add-person">
+                                    <i class="fas fa-plus"></i> Add Another Person
+                                </button>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="additional-notes" class="form-label">Additional Notes or Questions</label>
+                                <textarea class="form-control" id="additional-notes" name="additional-notes" rows="3" placeholder="Anything else you'd like us to know?"></textarea>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">Send RSVP</button>
+                            </div>
+                        </form>
+                        
+                        <div class="mt-4">
+                            <p>Or email us directly at louisaanddamon@gmail.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <p class="footer-note">We can't wait to celebrate with you!</p>
+            <p class="names">Louisa & Damon</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
