@@ -1,14 +1,86 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Parallax effect for floating leaves, floral corners, and floral top-right
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                const headerOffset = window.innerWidth > 768 ? 80 : 20; // Reduced offset for sticky navbar
+                const elementPosition = target.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+    // Navbar scroll behavior - detect when sticky
+    const navbar = document.querySelector('.navbar');
+    let lastScrollY = window.scrollY;
+    let navbarTicking = false;
+    let navbarInitialTop = null;
+    let navbarHeight = null;
+    let navbarPlaceholder = null;
+
+    // Get the initial position of the navbar and create placeholder
+    if (navbar) {
+        // Create a placeholder div to prevent content jumping
+        navbarPlaceholder = document.createElement('div');
+        navbarPlaceholder.style.display = 'none';
+        navbar.parentNode.insertBefore(navbarPlaceholder, navbar.nextSibling);
+        
+        // Wait for the page to load to get accurate position
+        window.addEventListener('load', () => {
+            navbarInitialTop = navbar.offsetTop;
+            navbarHeight = navbar.offsetHeight;
+            navbarPlaceholder.style.height = navbarHeight + 'px';
+        });
+        
+        // Fallback in case load event already fired
+        setTimeout(() => {
+            if (navbarInitialTop === null) {
+                navbarInitialTop = navbar.offsetTop;
+                navbarHeight = navbar.offsetHeight;
+                navbarPlaceholder.style.height = navbarHeight + 'px';
+            }
+        }, 100);
+    }
+
+    function handleNavbarScroll() {
+        if (!navbar || navbarInitialTop === null) return;
+        
+        const currentScrollY = window.scrollY;
+        
+        // Check if we've scrolled past the navbar's initial position
+        if (currentScrollY >= navbarInitialTop) {
+            navbar.classList.add('navbar-scrolled');
+            navbarPlaceholder.style.display = 'block'; // Show placeholder to prevent jumping
+            console.log('Navbar is fixed - glass effect ON');
+        } else {
+            navbar.classList.remove('navbar-scrolled');
+            navbarPlaceholder.style.display = 'none'; // Hide placeholder
+            console.log('Navbar is relative - glass effect OFF');
+        }
+        
+        lastScrollY = currentScrollY;
+    }    // Parallax effect for floating leaves, floral corners, and floral top-right
     const floatingLeaves = document.querySelectorAll('.floating-leaf');
     const floralCorners = document.querySelectorAll('.floral-corner');
     const floralTopRight = document.querySelector('.floral-top-right');
     const floralTopLeft = document.querySelector('.floral-top-left');
+    let parallaxTicking = false;
 
     function updateParallaxElements() {
         const scrolled = window.pageYOffset;
         const scrollDirection = scrolled > (window.lastScrollY || 0) ? 1 : -1;
         window.lastScrollY = scrolled;
+        
+        // Pre-calculate common values for performance
+        const scrollFactor = scrolled * 0.001; // Normalized scroll value
+        const time = Date.now() * 0.001; // Time for animation variation
         
         // Get section positions for scroll-triggered leaves
         const ceremonySection = document.getElementById('ceremony');
@@ -100,10 +172,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Stay visible before 700px scroll
                         leaf.style.opacity = '1';
                         
-                        // Leaf 3: Moves diagonally right-up with swirling motion
+                        // Leaf 3: Moves diagonally right-up with optimized motion
                         const translateX = scrolled * speed * 0.7;
-                        const translateY = -(scrolled * speed * 0.5) + Math.sin(scrolled * 0.015) * 25;
-                        const rotation = (scrolled * 0.18) + Math.sin(scrolled * 0.012) * 30;
+                        const translateY = -(scrolled * speed * 0.5) + Math.sin(scrollFactor * 15) * 20;
+                        const rotation = (scrolled * 0.15) + Math.sin(scrollFactor * 12) * 25;
                         
                         leaf.style.setProperty('--scroll-offset-x', `${translateX}px`);
                         leaf.style.setProperty('--scroll-offset-y', `${translateY}px`);
@@ -118,10 +190,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         // Calculate relative scroll within the active range
                         const relativeScroll = scrolled - ceremonyTop;
                         
-                        // Leaf 4: Moves diagonally left-down with different pattern
-                        const translateX = -(relativeScroll * speed * 0.9);
-                        const translateY = (relativeScroll * speed * 0.3) + Math.cos(relativeScroll * 0.018) * 30;
-                        const rotation = -(relativeScroll * 0.22) + Math.cos(relativeScroll * 0.014) * 35;
+                        // Leaf 4: Moves diagonally left-down with optimized pattern
+                        const translateX = -(relativeScroll * speed * 0.8);
+                        const translateY = (relativeScroll * speed * 0.3) + Math.cos(relativeScroll * 0.01) * 25;
+                        const rotation = -(relativeScroll * 0.18) + Math.cos(relativeScroll * 0.008) * 30;
                         
                         leaf.style.setProperty('--scroll-offset-x', `${translateX}px`);
                         leaf.style.setProperty('--scroll-offset-y', `${translateY}px`);
@@ -134,19 +206,19 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 // Handle original leaves (leaf-1 and leaf-2) - always visible
                 if (isLeftSide) {
-                    // Leaf 1: Moves diagonally left-up with varying rotation
-                    const translateX = -(scrolled * speed * 1.2);
-                    const translateY = -(scrolled * speed * 0.4) + Math.sin(scrolled * 0.01) * 15;
-                    const rotation = (scrolled * 0.15) + Math.sin(scrolled * 0.008) * 20;
+                    // Leaf 1: Moves diagonally left-up with smooth rotation
+                    const translateX = -(scrolled * speed * 1.0);
+                    const translateY = -(scrolled * speed * 0.4) + Math.sin(scrollFactor * 10) * 12;
+                    const rotation = (scrolled * 0.12) + Math.sin(scrollFactor * 8) * 15;
                     
                     leaf.style.setProperty('--scroll-offset-x', `${translateX}px`);
                     leaf.style.setProperty('--scroll-offset-y', `${translateY}px`);
                     leaf.style.setProperty('--scroll-rotation', `${rotation}deg`);
                 } else {
-                    // Leaf 2: Moves diagonally right-down with opposite rotation
-                    const translateX = scrolled * speed * 0.8;
-                    const translateY = (scrolled * speed * 0.6) + Math.cos(scrolled * 0.012) * 20;
-                    const rotation = -(scrolled * 0.2) + Math.cos(scrolled * 0.01) * 25;
+                    // Leaf 2: Moves diagonally right-down with smooth rotation
+                    const translateX = scrolled * speed * 0.7;
+                    const translateY = (scrolled * speed * 0.5) + Math.cos(scrollFactor * 12) * 15;
+                    const rotation = -(scrolled * 0.15) + Math.cos(scrollFactor * 10) * 20;
                     
                     leaf.style.setProperty('--scroll-offset-x', `${translateX}px`);
                     leaf.style.setProperty('--scroll-offset-y', `${translateY}px`);
@@ -156,35 +228,47 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Throttled scroll handler for performance
-    let ticking = false;
-    function handleScroll() {
-        if (!ticking) {
+    // Optimized combined scroll handler with requestAnimationFrame
+    function handleOptimizedScroll() {
+        if (!parallaxTicking) {
             requestAnimationFrame(() => {
+                // Handle navbar scroll
+                handleNavbarScroll();
+                // Handle parallax elements
                 updateParallaxElements();
-                ticking = false;
+                parallaxTicking = false;
             });
-            ticking = true;
+            parallaxTicking = true;
         }
     }
 
-    window.addEventListener('scroll', handleScroll);
+    // Single scroll event listener for both navbar and parallax
+    window.addEventListener('scroll', handleOptimizedScroll, { passive: true });
 
-    // Desktop navbar scroll effect
-    const desktopNav = document.querySelector('.navbar');
-    let lastScroll = 0;
-
-    window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+    // Timeline Animation on Scroll
+    function initTimelineAnimations() {
+        const timelineItems = document.querySelectorAll('.timeline-item');
         
-        if (currentScroll > 100) {
-            desktopNav.classList.add('navbar-scrolled');
-        } else {
-            desktopNav.classList.remove('navbar-scrolled');
-        }
+        const observerOptions = {
+            threshold: 0.3,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-        lastScroll = currentScroll;
-    });
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        timelineItems.forEach(item => {
+            timelineObserver.observe(item);
+        });
+    }
+
+    // Initialize timeline animations
+    initTimelineAnimations();
 
     // Handle RSVP form functionality
     const rsvpForm = document.getElementById('rsvp-form');
