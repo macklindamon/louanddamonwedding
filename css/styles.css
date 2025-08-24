@@ -1078,46 +1078,40 @@ html {
     }
 
     .floral-top-right {
-        width: 200px;
+        width: 300px;
         top: -30px;
-        right: 0px;
-        max-width: 35vw;
+        right: -80px;
     }
 
     .floral-top-left {
-        width: 200px;
+        width: 300px;
         top: -30px;
-        left: 0px;
-        max-width: 35vw;
+        left: -80px;
     }
 
     /* Mobile positioning for floating leaves - keep them within viewport */
     .leaf-1 {
-        width: 120px;
+        width: 220px;
         left: 2%;
         top: 45%;
-        max-width: 25vw;
     }
 
     .leaf-2 {
-        width: 100px;
-        right: 2%;
+        width: 200px;
+        right: %;
         top: 55%;
-        max-width: 25vw;
     }
 
     .leaf-3 {
-        width: 100px;
+        width: 200px;
         left: 0%;
         top: 35%;
-        max-width: 20vw;
     }
 
     .leaf-4 {
-        width: 120px;
+        width: 220px;
         right: 0%;
         top: 65%;
-        max-width: 25vw;
     }
 
 
