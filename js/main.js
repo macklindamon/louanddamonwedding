@@ -1,4 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // RSVP form elements initialization
+    const rsvpForm = document.getElementById('rsvp-form');
+    const partySizeSelect = document.getElementById('party-size');
+    const addPersonBtn = document.getElementById('add-person');
+    const personContainer = document.querySelector('.person-container');
+    const eventSelection = document.getElementById('event-selection');
+    const attendingRadios = document.querySelectorAll('input[name="attending"]');
+    let personCount = 1;  // Initialize person count
+
+    // Initialize form by rendering person entries based on selected party size
+    function renderInitialPersonEntries() {
+        if (partySizeSelect && personContainer) {
+            const initialSize = parseInt(partySizeSelect.value) || 1;
+            personCount = initialSize;  // Set initial person count
+            updatePersonEntries(initialSize);
+        }
+    }
+    
+    // Wait for a brief moment to ensure DOM is fully loaded
+    setTimeout(renderInitialPersonEntries, 0);
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -271,25 +291,27 @@ document.addEventListener('DOMContentLoaded', function() {
     initTimelineAnimations();
 
     // Handle RSVP form functionality
-    const rsvpForm = document.getElementById('rsvp-form');
-    const partySizeSelect = document.getElementById('party-size');
-    const addPersonBtn = document.getElementById('add-person');
-    const personContainer = document.querySelector('.person-container');
-    const eventSelection = document.getElementById('event-selection');
-    const attendingRadios = document.querySelectorAll('input[name="attending"]');
-    let personCount = 1;
 
     // Handle attendance radio buttons
     attendingRadios.forEach(radio => {
         radio.addEventListener('change', function() {
-            if (this.value === 'yes') {
+            // Update visibility based on attendance
+            if (this.value === 'true') {
                 eventSelection.style.display = 'block';
                 partySizeSelect.closest('.mb-4').style.display = 'block';
-                document.querySelector('.people-details').style.display = 'block';
             } else {
                 eventSelection.style.display = 'none';
                 partySizeSelect.closest('.mb-4').style.display = 'none';
-                document.querySelector('.people-details').style.display = 'none';
+            }
+            // Always show people details
+            document.querySelector('.people-details').style.display = 'block';
+            
+            // Update party size if needed
+            if (this.value === 'true') {
+                const currentSize = parseInt(partySizeSelect.value) || 1;
+                updatePersonEntries(currentSize);
+            } else {
+                updatePersonEntries(1);  // Reset to 1 person when not attending
             }
         });
     });
@@ -298,15 +320,25 @@ document.addEventListener('DOMContentLoaded', function() {
     if (partySizeSelect) {
         partySizeSelect.addEventListener('change', function() {
             const selectedSize = parseInt(this.value);
-            updatePersonEntries(selectedSize);
+            if (!isNaN(selectedSize) && selectedSize > 0) {
+                updatePersonEntries(selectedSize);
+            }
         });
     }
 
     // Add person functionality
     if (addPersonBtn) {
         addPersonBtn.addEventListener('click', function() {
-            personCount++;
-            addPersonEntry(personCount);
+            let currentSize = parseInt(partySizeSelect.value) || 1;
+            currentSize++;
+            partySizeSelect.value = currentSize;
+            
+            // Instead of updating all entries, just append a new one
+            addPersonEntry(currentSize);
+            personCount = currentSize;
+            
+            // Update entry numbers for consistency
+            renumberPersonEntries();
         });
     }
 
@@ -359,26 +391,42 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function updatePersonEntries(targetSize) {
-        const currentEntries = personContainer.querySelectorAll('.person-entry').length;
+        if (!personContainer) return;  // Guard against missing container
         
-        if (targetSize > currentEntries) {
-            // Add more entries
-            for (let i = currentEntries + 1; i <= targetSize; i++) {
-                addPersonEntry(i);
-            }
-        } else if (targetSize < currentEntries) {
-            // Remove excess entries (from the end) but don't recreate existing ones
-            const entries = personContainer.querySelectorAll('.person-entry');
-            for (let i = currentEntries - 1; i >= targetSize; i--) {
-                entries[i].remove();
-            }
-        }
+        // Ensure targetSize is valid
+        targetSize = Math.max(1, parseInt(targetSize) || 1);
         
+        // Collect existing values before updating
+        const existingEntries = Array.from(personContainer.querySelectorAll('.person-entry')).map(entry => {
+            return {
+                firstName: entry.querySelector('input[name$="-firstname"]')?.value || '',
+                lastName: entry.querySelector('input[name$="-lastname"]')?.value || '',
+                email: entry.querySelector('input[name$="-email"]')?.value || '',
+                dietary: entry.querySelector('textarea[name$="-dietary"]')?.value || ''
+            };
+        });
+        
+        // Update person count
         personCount = targetSize;
         
-        // Only renumber if we actually need to (when entries were removed)
-        if (targetSize < currentEntries) {
-            renumberPersonEntries();
+        // Clear container
+        personContainer.innerHTML = '';
+        
+        // Add entries up to targetSize, preserving existing values
+        for (let i = 1; i <= targetSize; i++) {
+            addPersonEntry(i);
+            
+            // Restore values if they existed
+            if (existingEntries[i - 1]) {
+                const entry = personContainer.children[i - 1];
+                const values = existingEntries[i - 1];
+                
+                entry.querySelector('input[name$="-firstname"]').value = values.firstName;
+                entry.querySelector('input[name$="-lastname"]').value = values.lastName;
+                const emailInput = entry.querySelector('input[name$="-email"]');
+                if (emailInput) emailInput.value = values.email;
+                entry.querySelector('textarea[name$="-dietary"]').value = values.dietary;
+            }
         }
     }
 
@@ -412,59 +460,120 @@ document.addEventListener('DOMContentLoaded', function() {
         personCount = entries.length;
     }
 
+    // Always show guest details fields, regardless of attendance
+    const attendanceRadios = document.querySelectorAll('input[name="attending"]');
+    attendanceRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            // Show guest details section for both Yes and No
+            document.querySelector('.people-details').style.display = 'block';
+            // Set checked for the selected radio only
+            attendanceRadios.forEach(r => {
+                r.checked = false;
+            });
+            this.checked = true;
+            // Trigger input event for CSS update
+            this.dispatchEvent(new Event('input', { bubbles: true }));
+        });
+    });
+
     // Handle form submission
     if (rsvpForm) {
-        rsvpForm.addEventListener('submit', function(e) {
+        rsvpForm.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
+            // Initialize Supabase client using CDN global
+            const supabase = window.supabase.createClient(
+                'https://wklcweheohxcxiwyydbo.supabase.co',
+                'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndrbGN3ZWhlb2h4Y3hpd3l5ZGJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg0NDkyOTEsImV4cCI6MjA3NDAyNTI5MX0.68rSYuWlgT1RMkCEEzFbwpfyfC-cfVN9LrG7wTrjx1U'
+            );
+
             // Collect form data
             const formData = new FormData(rsvpForm);
-            const rsvpData = {
-                attending: formData.get('attending'),
-                events: formData.getAll('events[]'),
-                partySize: formData.get('party-size'),
-                people: [],
-                additionalNotes: formData.get('additional-notes')
-            };
+            const attending = formData.get('attending');
+            const events = formData.getAll('events[]');
+            const partySize = formData.get('party-size');
+            let additionalNotes = formData.get('additional-notes');
+            if (!additionalNotes || additionalNotes.trim() === '') {
+                additionalNotes = 'none';
+            }
 
-            // Collect person data
-            for (let i = 1; i <= personCount; i++) {
-                const person = {
-                    firstName: formData.get(`person-${i}-firstname`),
-                    lastName: formData.get(`person-${i}-lastname`),
-                    dietary: formData.get(`person-${i}-dietary`)
-                };
-                
-                // Only include email for the first person
-                if (i === 1) {
-                    person.email = formData.get(`person-${i}-email`);
+            // Validation
+            let validationErrors = [];
+            if (!attending) validationErrors.push('Attendance selection is required.');
+            if (!partySize) validationErrors.push('Party size is required.');
+
+            // Collect guest details
+            const personEntries = document.querySelectorAll('.person-entry');
+            const guests = [];
+            let primaryEmail = '';
+            
+            // First, get the primary guest's email
+            const primaryEmailInput = personEntries[0]?.querySelector('input[name^="person-"][name$="-email"]');
+            if (primaryEmailInput) {
+                primaryEmail = primaryEmailInput.value.trim();
+                if (!primaryEmail) {
+                    validationErrors.push('Email is required for the primary guest.');
                 }
+            }
+            
+            // Then collect all guest details
+            personEntries.forEach((entry, idx) => {
+                const firstName = entry.querySelector('input[name^="person-"][name$="-firstname"]').value.trim();
+                const lastName = entry.querySelector('input[name^="person-"][name$="-lastname"]').value.trim();
+                const dietary = entry.querySelector('textarea[name^="person-"][name$="-dietary"]').value.trim() || 'none';
                 
-                if (person.firstName && person.lastName) {
-                    rsvpData.people.push(person);
+                if (!firstName) validationErrors.push(`First name is required for guest ${idx + 1}.`);
+                if (!lastName) validationErrors.push(`Last name is required for guest ${idx + 1}.`);
+                
+                guests.push({ 
+                    first_name: firstName, 
+                    last_name: lastName, 
+                    email: primaryEmail, // Use the primary guest's email for all guests
+                    dietary: dietary
+                });
+            });
+
+            if (validationErrors.length > 0) {
+                alert('Please fix the following errors before submitting:\n' + validationErrors.join('\n'));
+                return;
+            }
+
+            // Prepare rows for Supabase
+            const rows = guests.map(guest => ({
+                attending: attending === 'true',
+                events,
+                party_size: partySize,
+                first_name: guest.first_name,
+                last_name: guest.last_name,
+                email: guest.email,
+                dietary: guest.dietary,
+                additional_notes: additionalNotes
+            }));
+            console.log('Rows to insert:', rows);
+
+            // Insert each guest as a separate row
+            let error = null;
+            for (const row of rows) {
+                const { error: insertError } = await supabase.from('rsvp').insert([row]);
+                if (insertError) {
+                    console.error('Insert error:', insertError);
+                    error = insertError;
+                    break;
+                } else {
+                    console.log('Insert success for row:', row);
                 }
             }
 
-            // Here you would typically send the data to your server
-            console.log('RSVP Data:', rsvpData);
-            
-            // For now, show a success message
-            if (rsvpData.attending === 'yes') {
-                alert(`Thank you for your RSVP! 
-                
-Attending: Yes
-Events: ${rsvpData.events.length > 0 ? rsvpData.events.join(', ') : 'None selected'}
-Party Size: ${rsvpData.people.length} people
-                
-We will be in touch soon.`);
+            if (error) {
+                alert('Submission failed: ' + error.message);
             } else {
-                alert(`Thank you for letting us know. We'll miss you but understand!`);
+                alert('RSVP submitted successfully!');
+                rsvpForm.reset();
+                // Reset form display state
+                updatePersonEntries(1);  // Reset to 1 person
+                eventSelection.style.display = 'none';
+                partySizeSelect.closest('.mb-4').style.display = 'none';
+                document.querySelector('.people-details').style.display = 'block';
             }
-            
-            // Optionally reset the form
-            // rsvpForm.reset();
-            // personCount = 1;
-            // updatePersonEntries(1);
         });
     }
 
