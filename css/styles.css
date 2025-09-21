@@ -685,16 +685,20 @@ html {
 /* Mobile Timeline Adjustments */
 @media (max-width: 768px) {
     .vertical-timeline::before {
-        left: 60px; /* Move line further from edge */
+        left: 5px; /* Move line further from edge */
+    }
+    
+    .timeline-item {
+        margin-bottom: 60px; /* More space between items */
     }
     
     .timeline-point {
-        left: 60px; /* Align with line */
+        left: 5px; /* Align with line */
     }
     
     .timeline-content {
-        margin-left: 120px; /* More space from line and dot */
-        flex-direction: column !important;
+        margin-left: 50px; /* More space from line and dot */
+        flex-direction: row !important;
         text-align: left !important;
         gap: 1rem;
         padding: 0 !important;
@@ -705,7 +709,7 @@ html {
     }
     
     .timeline-image {
-        max-width: 150px;
+        max-width: 80px;
         height: auto;
     }
     

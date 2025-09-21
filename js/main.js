@@ -8,6 +8,29 @@ document.addEventListener('DOMContentLoaded', function() {
     const attendingRadios = document.querySelectorAll('input[name="attending"]');
     let personCount = 1;  // Initialize person count
 
+    // Function to show/hide dietary requirements fields
+    function showDietaryRequirements(show) {
+        const dietaryFields = document.querySelectorAll('textarea[name$="-dietary"]');
+        const dietaryLabels = document.querySelectorAll('label');
+        
+        dietaryFields.forEach(field => {
+            const container = field.closest('.mb-3');
+            if (container) {
+                container.style.display = show ? 'block' : 'none';
+            }
+        });
+        
+        // Also hide/show dietary labels specifically
+        dietaryLabels.forEach(label => {
+            if (label.textContent.includes('Dietary Requirements')) {
+                const container = label.closest('.mb-3');
+                if (container) {
+                    container.style.display = show ? 'block' : 'none';
+                }
+            }
+        });
+    }
+
     // Initialize form by rendering person entries based on selected party size
     function renderInitialPersonEntries() {
         if (partySizeSelect && personContainer) {
@@ -19,6 +42,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Wait for a brief moment to ensure DOM is fully loaded
     setTimeout(renderInitialPersonEntries, 0);
+    
+    // Initialize dietary requirements visibility based on initial attendance selection
+    setTimeout(() => {
+        const currentAttendance = document.querySelector('input[name="attending"]:checked');
+        if (currentAttendance) {
+            showDietaryRequirements(currentAttendance.value === 'true');
+        }
+    }, 10);
+    
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -299,9 +331,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (this.value === 'true') {
                 eventSelection.style.display = 'block';
                 partySizeSelect.closest('.mb-4').style.display = 'block';
+                // Show dietary requirements fields
+                showDietaryRequirements(true);
             } else {
                 eventSelection.style.display = 'none';
                 partySizeSelect.closest('.mb-4').style.display = 'none';
+                // Hide dietary requirements fields
+                showDietaryRequirements(false);
             }
             // Always show people details
             document.querySelector('.people-details').style.display = 'block';
@@ -379,6 +415,18 @@ document.addEventListener('DOMContentLoaded', function() {
         `;
         
         personContainer.appendChild(personEntry);
+
+        // Check current attendance selection and hide dietary requirements if not attending
+        const currentAttendance = document.querySelector('input[name="attending"]:checked');
+        if (currentAttendance && currentAttendance.value === 'false') {
+            const dietaryField = personEntry.querySelector('textarea[name$="-dietary"]');
+            if (dietaryField) {
+                const dietaryContainer = dietaryField.closest('.mb-3');
+                if (dietaryContainer) {
+                    dietaryContainer.style.display = 'none';
+                }
+            }
+        }
 
         // Add remove functionality (only for non-first persons)
         if (!isFirstPerson) {
