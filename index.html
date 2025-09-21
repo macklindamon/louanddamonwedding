@@ -340,7 +340,7 @@
                                                 <label class="form-label">First Name</label>
                                                 <input type="text" class="form-control" name="person-1-firstname" required>
                                             </div>
-                                            <div class="col-md-6 mb-3 pl-1">
+                                            <div class="col-md-6 mb-3 p-0">
                                                 <label class="form-label">Last Name</label>
                                                 <input type="text" class="form-control" name="person-1-lastname" required>
                                             </div>
@@ -389,51 +389,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/main.js"></script>
-                        const personEntries = document.querySelectorAll('.person-entry');
-                        const guests = [];
-                        personEntries.forEach((entry, idx) => {
-                            const firstName = entry.querySelector('input[name^="person-"][name$="-firstname"]').value;
-                            const lastName = entry.querySelector('input[name^="person-"][name$="-lastname"]').value;
-                            const email = entry.querySelector('input[name^="person-"][name$="-email"]').value;
-                            const dietary = entry.querySelector('textarea[name^="person-"][name$="-dietary"]').value;
-                            guests.push({ first_name: firstName, last_name: lastName, email, dietary });
-                        });
-                        console.log('Guests:', guests);
-
-                        // Prepare rows for Supabase
-                        const rows = guests.map(guest => ({
-                            attending,
-                            events,
-                            party_size: partySize,
-                            first_name: guest.first_name,
-                            last_name: guest.last_name,
-                            email: guest.email,
-                            dietary: guest.dietary,
-                            additional_notes: additionalNotes
-                        }));
-                        console.log('Rows to insert:', rows);
-
-                        // Insert each guest as a separate row
-                        let error = null;
-                        for (const row of rows) {
-                            console.log('Inserting row:', row);
-                            const { error: insertError } = await supabase.from('rsvp').insert([row]);
-                            if (insertError) {
-                                console.error('Insert error:', insertError);
-                                error = insertError;
-                                break;
-                            } else {
-                                console.log('Insert success for row:', row);
-                            }
-                        }
-
-                        if (error) {
-                            alert('Submission failed: ' + error.message);
-                        } else {
-                            alert('RSVP submitted successfully!');
-                            this.reset();
-                        }
-            });
-    </script>
 </body>
 </html>

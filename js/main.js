@@ -398,11 +398,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 </button>` : ''}
             </div>
             <div class="row">
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3 p-0">
                     <label class="form-label">First Name</label>
                     <input type="text" class="form-control" name="person-${personNum}-firstname" required>
                 </div>
-                <div class="col-md-6 mb-3">
+                <div class="col-md-6 mb-3 p-0 pl-md-1">
                     <label class="form-label">Last Name</label>
                     <input type="text" class="form-control" name="person-${personNum}-lastname" required>
                 </div>
